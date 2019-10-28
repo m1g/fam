@@ -159,7 +159,6 @@ router.delete('/', auth, async (req, res) => {
 // @route     PUT api/profile/travels
 // @desc      Add profile travels
 // @access    Private
-
 router.put('/travels', [auth, [
   check('destination', 'Destination is required').not().isEmpty(),
   check('lodging', 'Lodging is required').not().isEmpty(),
