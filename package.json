@@ -9,10 +9,6 @@
   "dependencies": {
     "@types/jest": "24.0.19",
     "@types/node": "12.11.5",
-    "@types/react": "16.9.9",
-    "@types/react-dom": "16.9.2",
-    "@types/react-router-dom": "^5.1.0",
-    "@types/styled-components": "^4.1.19",
     "bcryptjs": "^2.4.3",
     "config": "^3.2.3",
     "cors": "^2.8.5",
@@ -20,27 +16,14 @@
     "express-validator": "^6.2.0",
     "gravatar": "^1.8.0",
     "jsonwebtoken": "^8.5.1",
-    "ky": "^0.15.0",
     "mongoose": "^5.7.7",
-    "node-sass": "^4.12.0",
-    "react": "^16.11.0",
-    "react-dom": "^16.11.0",
-    "react-router-dom": "^5.1.2",
-    "react-scripts": "3.2.0",
-    "styled-components": "^4.4.0",
-    "typescript": "3.6.4"
+    "node-sass": "^4.12.0"
   },
   "scripts": {
     "start": "node server",
     "server": "nodemon server",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
     "client": "npm start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\""
-  },
-  "eslintConfig": {
-    "extends": "react-app"
   },
   "browserslist": {
     "production": [
