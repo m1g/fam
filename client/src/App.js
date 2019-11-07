@@ -12,6 +12,7 @@ import EditProfile from './components/profile-forms/EditProfile';
 import AddTravel from './components/profile-forms/AddTravel';
 import Profile from './components/profile/Profile';
 import Profiles from './components/profiles/Profiles';
+import Groups from './components/groups/Groups';
 import PrivateRoute from './components/routing/PrivateRoute';
 
 // Redux
@@ -46,6 +47,7 @@ const App = () => {
               <PrivateRoute exact path="/create-profile" component={CreateProfile} />
               <PrivateRoute exact path="/edit-profile" component={EditProfile} />
               <PrivateRoute exact path="/add-travel" component={AddTravel} />
+              <PrivateRoute exact path="/groups" component={Groups} />
             </Switch>
           </section>
         </>
