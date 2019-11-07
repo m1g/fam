@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import Spinner from '../layout/Spinner';
 import ProfileTop from './ProfileTop';
 import ProfileAbout from './ProfileAbout';
+import ProfileTravelExperience from './ProfileTravelExperience';
 import { getProfileById } from '../../actions/profile';
 
 const Profile = ({
@@ -35,7 +36,15 @@ const Profile = ({
             )}
             <div className="profile-grid my-1">
               <ProfileTop profile={profile} />  
-              <ProfileAbout profile={profile} />  
+              <ProfileAbout profile={profile} />
+              <div className="profile-exp bg-white p-2">
+                <h2 className="text-primary">Travels</h2>
+                {profile.travels.length > 0 ? (<>
+                  {profile.travels.map(travel => (
+                    <ProfileTravelExperience key={travel._id} experience={travel} />
+                  ))}
+                </>) : (<h4>No travels yet</h4>)}
+              </div>
             </div>
         </>
       )}
