@@ -10,31 +10,38 @@ const User = require('../../models/User');
 // @route     POST api/groups
 // @desc      Create a group
 // @access    Private
-router.post('/', [auth, [
-  check('name', 'Name is required')
-    .not()
-    .isEmpty()
-]], async (req, res) =>{
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
-  }
+router.post(
+  '/',
+  [
+    auth,
+    [
+      check('name', 'Name is required')
+        .not()
+        .isEmpty()
+    ]
+  ],
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
 
-  try {
-    const newGroup = new Group({
-      name: req.body.name,
-      owner: req.user.id,
-      image: req.body.image
-    });
+    try {
+      const newGroup = new Group({
+        name: req.body.name,
+        owner: req.user.id,
+        image: req.body.image
+      });
 
-    const group = await newGroup.save();
-    
-    res.json(group);
-  } catch (err) {
-    console.error(err.message);
-    res.status(500).send('Server Error')
+      const group = await newGroup.save();
+
+      res.json(group);
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send('Server Error');
+    }
   }
-});
+);
 
 // @route     GET api/groups
 // @desc      Get all groups
@@ -56,8 +63,8 @@ router.get('/:id', auth, async (req, res) => {
   try {
     const group = await Group.findById(req.params.id);
 
-    if(!group) {
-      return res.status(404).json({ msg: 'Group not found' })
+    if (!group) {
+      return res.status(404).json({ msg: 'Group not found' });
     }
 
     res.json(group);
@@ -83,14 +90,13 @@ router.delete('/:id', auth, async (req, res) => {
 
     // Check user
     if (group.owner.toString() !== req.user.id) {
-      return res.status(401).json({ msg: 'User not authorized' })
+      return res.status(401).json({ msg: 'User not authorized' });
     }
 
     await group.remove();
 
     res.json({ msg: 'Group removed' });
   } catch (err) {
-
     if (err.kind === 'ObjectId') {
       return res.status(404).json({ msg: 'Group not found' });
     }
@@ -98,5 +104,55 @@ router.delete('/:id', auth, async (req, res) => {
     res.status(500).send('Server Error');
   }
 });
+
+// @route     POST api/groups/trip/:id
+// @desc      Add a trip to a group
+// @access    Private
+router.post(
+  '/trip/:id',
+  [
+    auth,
+    [
+      check('destination', 'Destination is required')
+        .not()
+        .isEmpty(),
+      check('lodging', 'Lodging is required')
+        .not()
+        .isEmpty(),
+      check('from', 'From date is required')
+        .not()
+        .isEmpty(),
+      check('to', 'To date is required')
+        .not()
+        .isEmpty()
+    ]
+  ],
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    try {
+      const group = await Group.findById(req.params.id);
+
+      const newTrip = {
+        destination: req.body.destination,
+        lodging: req.body.lodging,
+        from: req.body.from,
+        to: req.body.to,
+        description: req.body.description
+      }
+
+      group.trips.unshift(newTrip);
+
+      await group.save();
+      res.json(group.trips);
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send('Server Error');
+    }
+  }
+);
 
 module.exports = router;

@@ -1,5 +1,8 @@
 import {
   GET_GROUPS,
+  GET_GROUP,
+  DELETE_GROUP,
+  ADD_GROUP,
   GROUP_ERROR
 } from '../actions/types'
 
@@ -18,6 +21,24 @@ export default function(state = initialState, action) {
       return {
         ...state,
         groups: payload,
+        loading: false
+      }
+    case GET_GROUP:
+      return {
+        ...state,
+        group: payload,
+        loading: false
+      }
+    case ADD_GROUP:
+      return {
+        ...state,
+        groups: [payload, ...state.groups],
+        loading: false
+      }
+    case DELETE_GROUP:
+      return {
+        ...state,
+        groups: state.groups.filter(group => group._id !== payload),
         loading: false
       }
     case GROUP_ERROR:

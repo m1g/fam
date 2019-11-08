@@ -454,6 +454,13 @@ button {
 }
 
 /* Posts Page */
+.posts-grid {
+  display: grid;
+  grid-template-areas:
+    'group group';
+  grid-gap: 1rem;
+}
+
 .post-form .post-form-header {
   background: var(--primary-color);
   padding: 0.5rem;
@@ -573,6 +580,13 @@ button {
   .post a,
   .post button {
     padding: 0.3rem 0.4rem;
+  }
+
+  /* Groups Page */
+
+  .posts-grid {
+    grid-template-areas:
+    'group';
   }
 }
 
