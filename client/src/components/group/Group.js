@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Spinner from '../layout/Spinner';
 import GroupItem from  '../groups/GroupItem';
+import TripForm from  '../group/TripForm';
 import { getGroup } from '../../actions/group'
 
 const Group = ({ getGroup, group: { group, loading }, match }) => {
@@ -16,6 +17,7 @@ const Group = ({ getGroup, group: { group, loading }, match }) => {
       Back To Groups
     </Link>
     <GroupItem group={group} showActions={false} />
+    <TripForm groupId={group._id} />
   </>);
 };
 

@@ -105,11 +105,11 @@ router.delete('/:id', auth, async (req, res) => {
   }
 });
 
-// @route     POST api/groups/trip/:id
+// @route     POST api/groups/trips/:id
 // @desc      Add a trip to a group
 // @access    Private
 router.post(
-  '/trip/:id',
+  '/trips/:id',
   [
     auth,
     [
@@ -154,5 +154,35 @@ router.post(
     }
   }
 );
+
+// @route     DELETE api/groups/trips/:id/:trip_id
+// @desc      Delete a trip from a group
+// @access    Private
+router.delete('/trips/:id/:trip_id', auth, async (req, res) => {
+  try {
+    const group = await Group.findById(req.params.id);
+
+    // Pull out trip
+    const trip = group.trips.find(trip => trip.id === req.params.trip_id);
+
+    // Make sure comment exists
+    if (!trip) {
+      return res.status(404).json({ msg: 'Trip does not exist'})
+    }
+
+    // Get remove index
+    const removeIndex = group.trips
+      .map(trip => trip.id)
+      .indexOf(req.params.trip_id);
+
+    group.trips.splice(removeIndex, 1)
+
+    await group.save();
+
+    res.json(group.trips)
+  } catch (err) {
+    
+  }
+});
 
 module.exports = router;
