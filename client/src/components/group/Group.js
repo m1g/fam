@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import Spinner from '../layout/Spinner';
 import GroupItem from  '../groups/GroupItem';
 import TripForm from  '../group/TripForm';
+import TripItem from '../group/TripItem';
 import { getGroup } from '../../actions/group'
 
 const Group = ({ getGroup, group: { group, loading }, match }) => {
@@ -17,6 +18,11 @@ const Group = ({ getGroup, group: { group, loading }, match }) => {
       Back To Groups
     </Link>
     <GroupItem group={group} showActions={false} />
+    <div className="comments">
+      {group.trips.map(trip => (
+        <TripItem key={trip._id} trip={trip} groupId={group._id} />
+        ))}
+    </div>
     <TripForm groupId={group._id} />
   </>);
 };

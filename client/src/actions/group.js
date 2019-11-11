@@ -104,7 +104,7 @@ export const addTrip = (groupId, formData) => async dispatch => {
       payload: res.data
     });
 
-    dispatch(setAlert('Trip added', 'success'));
+    dispatch(setAlert('Trip Added', 'success'));
   } catch (err) {
     dispatch({
       type: GROUP_ERROR,
@@ -124,7 +124,7 @@ export const deleteTrip = (groupId, tripId) => async dispatch => {
       payload: tripId
     });
 
-    dispatch(setAlert('Trip removed', 'success'));
+    dispatch(setAlert('Trip Removed', 'success'));
   } catch (err) {
     dispatch({
       type: GROUP_ERROR,
